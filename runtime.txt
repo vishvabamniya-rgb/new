@@ -1,1 +1,4 @@
 python-3.12.3
+setuptools>=67.0.0
+gunicorn
+flask
