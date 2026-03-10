@@ -52,7 +52,6 @@ import ffmpeg
 from urllib.parse import urlparse, parse_qs
 import base64
 from custom_cipher import B64Cipher, Secret
-from cp_encn import decrypt_cp_encn_video
 from appx_al import (
     decrypt_aes_link,
     is_node_link,
