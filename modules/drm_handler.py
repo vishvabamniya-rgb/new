@@ -23,7 +23,6 @@ from base64 import b64encode, b64decode
 from modules.topic_handler import get_or_create_forum_topic, extract_autotopic_name, send_document_with_fallback, send_video_with_fallback, send_photo_with_fallback
 from bs4 import BeautifulSoup
 import saini as helper
-import cw_helper
 import html_handler
 import globals
 from db import db
@@ -140,7 +139,7 @@ async def drm_handler(bot: Client, m: Message):
     endfilename = globals.endfilename
     thumb = globals.thumb
     CR = globals.CR
-    cwtoken = globals.cwtoken
+    token = globals.token
     cptoken = globals.cptoken
     pwtoken = globals.pwtoken
     vidwatermark = globals.vidwatermark
@@ -290,7 +289,7 @@ async def drm_handler(bot: Client, m: Message):
             b_name = file_name.replace('_', ' ')
         else:
             b_name = raw_text0
-        await editable.edit("**🔹Enter __PW/CP/CW__ Working Token For 𝐌𝐏𝐃 𝐔𝐑𝐋 or send /d**")
+        await editable.edit("**🔹Enter __PW/CP/__ Working Token For 𝐌𝐏𝐃 𝐔𝐑𝐋 or send /d**")
         try:
             input4: Message = await bot.listen(editable.chat.id, timeout=30)
             raw_text4 = input4.text
@@ -623,9 +622,9 @@ async def drm_handler(bot: Client, m: Message):
                      url = "https://" + Vxy
             link0 = url
 
-            # CW Helper Integration
+            #  Helper Integration
             if "#keysV1=" in url:
-                url_clean, keys_str = cw_helper.get_download_info(url)
+                url_clean, keys_str = _helper.get_download_info(url)
                 if keys_str:
                      url = url_clean
                      mpd = url_clean
@@ -678,7 +677,7 @@ async def drm_handler(bot: Client, m: Message):
                         text = await resp.text()
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
 
-            if "acecwply" in url:
+            if "aceply" in url:
                 cmd = f'yt-dlp --concurrent-fragments 5 -o "{name}.%(ext)s" -f "bestvideo[height<={raw_text2}]+bestaudio" --hls-prefer-ffmpeg --no-keep-video --remux-video mkv --no-warning "{url}"'
          
             elif "https://cpmc/" in url:
@@ -801,7 +800,7 @@ async def drm_handler(bot: Client, m: Message):
                 
                 
             if "edge.api.brightcove.com" in url:
-                bcov = f'bcov_auth={cwtoken}'
+                bcov = f'bcov_auth={token}'
                 url = url.split("bcov_auth")[0]+bcov
 
             #elif "d1d34p8vz63oiq" in url or "sec1.pw.live" in url:
@@ -1592,7 +1591,7 @@ async def drm_handler(bot: Client, m: Message):
                             except:
                                 namef = name1
                         need_referer = True
-                    if "cwmediabkt99" in url:
+                    if "mediabkt99" in url:
                         namef = name1
                         max_retries = 15  # Define the maximum number of retries
                         retry_delay = 4  # Delay between retries in seconds
@@ -2236,10 +2235,10 @@ async def drm_handler(bot: Client, m: Message):
                             prog = await bot.send_message(channel_id, Show, disable_web_page_preview=True)
                             prog1 = await m.reply_text(Show1, disable_web_page_preview=True)
                             
-                            # CW / DRM Integration Check
+                            #  / DRM Integration Check
                             if (keys_string and mpd) or (mpd and ".m3u8" in str(mpd)):
-                                print(f"🔐 Executing CW/NRE Download for: {name1}")
-                                res_file = await cw_helper.download_video_with_nre(mpd, keys_string if keys_string else "", name)
+                                print(f"🔐 Executing /NRE Download for: {name1}")
+                                res_file = await _helper.download_video_with_nre(mpd, keys_string if keys_string else "", name)
                                 if res_file:
                                     print(f"✅ Download Successful: {res_file}")
                                 else:
