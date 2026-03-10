@@ -5,15 +5,15 @@ from os import environ
 
 API_ID = int(environ.get("API_ID", "26713214"))
 API_HASH = environ.get("API_HASH", "fc87c0fb26949deb0bc940dd35c1658d")
-BOT_TOKEN = environ.get("BOT_TOKEN", "")
+BOT_TOKEN = environ.get("BOT_TOKEN", "8797476226:AAFzIZlnQkB2xOwlHOdig8X9BiqHWxfWDjk")
 
-OWNER = int(environ.get("OWNER", "7752941299"))
-CREDIT = environ.get("CREDIT", '👨‍💻Rick Johnson')
-CREDIT_LINK = environ.get("CREDIT_LINK", 'https://t.me/rick007contactbot')
+OWNER = int(environ.get("OWNER", "7566796700"))
+CREDIT = environ.get("CREDIT", 'sujal')
+CREDIT_LINK = environ.get("CREDIT_LINK", 'https://t.me/erinxlevi')
 cookies_file_path = os.getenv("cookies_file_path", "youtube_cookies.txt")
 
 # MongoDB Configuration
-MONGO_URL = environ.get("MONGO_URL", "")
+MONGO_URL = environ.get("MONGO_URL", "mongodb+srv://xuanhien:15062002Aa@cluster0.lkpqjvj.mongodb.net")
 DATABASE_NAME = environ.get("DATABASE_NAME", "eagle")
 
 # Owner and Admin Configuration
@@ -70,4 +70,5 @@ Please contact the admin to get access.</blockquote>""",
 
 <blockquote>Use format: {format}</blockquote>"""
 }
+
 
