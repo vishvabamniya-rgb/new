@@ -1,38 +1,44 @@
-# Use a Python 3.12.3 Alpine base image
+# Use Python 3.12 Alpine
 FROM python:3.12-alpine3.20
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy all files from the current directory to the container's /app directory
+# Copy project files
 COPY . .
 
-# Install necessary dependencies
+# Install system dependencies
 RUN apk add --no-cache \
     gcc \
-    libffi-dev \
+    g++ \
+    make \
+    cmake \
     musl-dev \
+    libffi-dev \
+    openssl-dev \
+    linux-headers \
     ffmpeg \
     aria2 \
-    make \
-    g++ \
-    cmake && \
-    wget -q https://github.com/axiomatic-systems/Bento4/archive/v1.6.0-639.zip && \
+    wget \
+    unzip \
+    bash
+
+# Install Bento4 mp4decrypt
+RUN wget -q https://github.com/axiomatic-systems/Bento4/archive/v1.6.0-639.zip && \
     unzip v1.6.0-639.zip && \
     cd Bento4-1.6.0-639 && \
     mkdir build && \
     cd build && \
     cmake .. && \
     make -j$(nproc) && \
-    cp mp4decrypt /usr/local/bin/ &&\
-    cd ../.. && \
+    cp mp4decrypt /usr/local/bin/ && \
+    cd /app && \
     rm -rf Bento4-1.6.0-639 v1.6.0-639.zip
 
 # Install Python dependencies
-RUN pip3 install --no-cache-dir --upgrade pip \
-    && pip3 install --no-cache-dir --upgrade -r sainibots.txt \
-    && python3 -m pip install -U yt-dlp
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r sainibots.txt && \
+    pip install --no-cache-dir -U yt-dlp
 
-# Set the command to run the application
-CMD ["sh", "-c", "gunicorn app:app & python3 modules/main.py"]
-
+# Run bot
+CMD ["python3", "modules/main.py"]
