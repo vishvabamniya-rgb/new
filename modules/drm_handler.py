@@ -52,22 +52,34 @@ import ffmpeg
 from urllib.parse import urlparse, parse_qs
 import base64
 from custom_cipher import B64Cipher, Secret
-from appx_al import (
-    is_node_link,
-    resolve_isp_link,
-    resolve_node_link,
-    decrypt_xor,
-    download_xor_pdf,
-    download_encrypted_pdf,
-    download_cloudflare_pdf,
-    zip_to_video,
-    classify_appx_link,
-    get_ytdlp_appx_header_args,
-    get_appx_headers,
-    deobfuscate_ts,
-    AppxLinkInfo,
-)
-
+try:
+    from modules.appx_al import (
+        resolve_isp_link,
+        resolve_node_link,
+        decrypt_xor,
+        download_xor_pdf,
+        download_encrypted_pdf,
+        download_cloudflare_pdf,
+        zip_to_video,
+        classify_appx_link,
+        get_ytdlp_appx_header_args,
+        get_appx_headers,
+        deobfuscate_ts,
+        AppxLinkInfo,
+    )
+except ImportError:
+    resolve_isp_link = None
+    resolve_node_link = None
+    decrypt_xor = None
+    download_xor_pdf = None
+    download_encrypted_pdf = None
+    download_cloudflare_pdf = None
+    zip_to_video = None
+    classify_appx_link = None
+    get_ytdlp_appx_header_args = None
+    get_appx_headers = None
+    deobfuscate_ts = None
+    AppxLinkInfo = None
 # Classplus Headers for API calls
 cp_headers = {
     "User-Agent": "Mobile-Android",
