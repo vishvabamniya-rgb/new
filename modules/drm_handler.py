@@ -145,19 +145,19 @@ async def download_youtube(url, ytf, name):
 async def drm_handler(bot: Client, m: Message):
     globals.processing_request = True
     globals.cancel_requested = False
-    caption = globals.caption
-    endfilename = globals.endfilename
-    thumb = globals.thumb
-    CR = globals.CR
-    token = globals.token
-    cptoken = globals.cptoken
-    pwtoken = globals.pwtoken
-    vidwatermark = globals.vidwatermark
-    raw_text2 = globals.raw_text2
-    quality = globals.quality
-    res = globals.res
-    topic = globals.topic
 
+    caption = getattr(globals, "caption", "")
+    endfilename = getattr(globals, "endfilename", "")
+    thumb = getattr(globals, "thumb", None)
+    CR = getattr(globals, "CR", "")
+    token = getattr(globals, "token", None)
+    cptoken = getattr(globals, "cptoken", None)
+    pwtoken = getattr(globals, "pwtoken", None)
+    vidwatermark = getattr(globals, "vidwatermark", None)
+    raw_text2 = getattr(globals, "raw_text2", "")
+    quality = getattr(globals, "quality", None)
+    res = getattr(globals, "res", None)
+    topic = getattr(globals, "topic", None)
     # Retry wrapper function for downloads
     async def retry_download(download_func, count_val, name1_val, url_val):
         """
